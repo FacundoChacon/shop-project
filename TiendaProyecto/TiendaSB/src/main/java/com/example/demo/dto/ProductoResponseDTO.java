@@ -3,6 +3,7 @@ package com.example.demo.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class ProductoResponseDTO {
     @Schema(description = "Identificacion del producto", example = "1")
@@ -18,6 +19,10 @@ public class ProductoResponseDTO {
     private int stock;
 
     private CategoriaDTO categoria;
+
+    private LocalDateTime fechaCreacion;
+
+    private LocalDateTime fechaActualizacion;
 
     // GETTERS Y SETTERS
 
@@ -54,5 +59,19 @@ public class ProductoResponseDTO {
     }
     public void setCategoria(CategoriaDTO categoria) {
         this.categoria = categoria;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public LocalDateTime getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 }

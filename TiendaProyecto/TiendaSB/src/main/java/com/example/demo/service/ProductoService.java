@@ -22,7 +22,8 @@ public class ProductoService {
     private Producto convertirAEntidad(ProductRequestDTO dto){
 
         Producto producto = new Producto();
-        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+        Categoria categoria = categoriaRepository
+                .findById(dto.getCategoriaId())
                 .orElseThrow(() ->
                         new RuntimeException("Categoría no encontrada"));
 
@@ -38,28 +39,23 @@ public class ProductoService {
     private ProductoResponseDTO convertirAResponseDTO(Producto producto){
 
         ProductoResponseDTO dto = new ProductoResponseDTO();
-        CategoriaDTO categoriaDTO = new CategoriaDTO();
+        CategoriaDTO categoriaDTO;
+        if(producto.getCategoria() != null){
 
-        categoriaDTO.setId(producto.getCategoria().getId());
-        categoriaDTO.setNombre(producto.getCategoria().getNombre());
+            categoriaDTO = new CategoriaDTO();
 
-        dto.setCategoria(categoriaDTO);
-        dto.setId(producto.getId());
-        dto.setNombre(producto.getNombre());
-        dto.setPrecio(producto.getPrecio());
-        dto.setStock(producto.getStock());
+            categoriaDTO.setId(producto.getCategoria().getId());
+            categoriaDTO.setNombre(producto.getCategoria().getNombre());
 
-        return dto;
-    }
-
-    private ProductoResponseDTO convertirADTO(Producto producto){
-
-        ProductoResponseDTO dto = new ProductoResponseDTO();
+            dto.setCategoria(categoriaDTO);
+        }
 
         dto.setId(producto.getId());
         dto.setNombre(producto.getNombre());
         dto.setPrecio(producto.getPrecio());
         dto.setStock(producto.getStock());
+        dto.setFechaActualizacion(producto.getFechaActualizacion());
+        dto.setFechaCreacion(producto.getFechaCreacion());
 
         return dto;
     }
@@ -71,7 +67,7 @@ public class ProductoService {
     public List<ProductoResponseDTO> listarProductos(){
         return repository.findAll()
                 .stream()
-                .map(this::convertirADTO)
+                .map(this::convertirAResponseDTO)
                 .toList();
     }
 
@@ -89,7 +85,7 @@ public class ProductoService {
     public ProductoResponseDTO buscarPorId(Long id){
         Producto producto = repository.findById(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado"));
-        return convertirADTO(producto);
+        return convertirAResponseDTO(producto);
     }
 
     // ELIMINAR

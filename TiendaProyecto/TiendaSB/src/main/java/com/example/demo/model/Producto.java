@@ -3,8 +3,11 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "productos")
@@ -24,6 +27,12 @@ public class Producto {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @UpdateTimestamp
+    private LocalDateTime fechaActualizacion;
     // GETTERS Y SETTERS
 
     public Long getId() {
@@ -59,5 +68,19 @@ public class Producto {
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+    public void setFechaCreacion() {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public LocalDateTime getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 }

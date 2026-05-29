@@ -2,6 +2,8 @@ package com.example.demo.dto;
 
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ProductRequestDTO {
@@ -19,8 +21,10 @@ public class ProductRequestDTO {
     @Min(value = 0, message = "El stock no puede ser negativo")
     private int stock;
 
+    @Schema(description = "Categoria de producto", example = "1")
     @NotNull(message = "La categoría es obligatoria")
     private Long categoriaId;
+
 
     // GETTERS Y SETTERS
 
