@@ -19,6 +19,9 @@ public class ProductRequestDTO {
     @Min(value = 0, message = "El stock no puede ser negativo")
     private int stock;
 
+    @NotNull(message = "La categoría es obligatoria")
+    private Long categoriaId;
+
     // GETTERS Y SETTERS
 
     public @NotBlank(message = "El nombre es obligatorio") String getNombre() {
@@ -40,5 +43,12 @@ public class ProductRequestDTO {
     }
     public void setStock(@Min(value = 0, message = "El stock no puede ser negativo") int stock) {
         this.stock = stock;
+    }
+
+    public @NotNull(message = "La categoría es obligatoria") Long getCategoriaId() {
+        return categoriaId;
+    }
+    public void setCategoriaId(@NotNull(message = "La categoría es obligatoria") Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 }

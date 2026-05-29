@@ -17,6 +17,8 @@ public class ProductoResponseDTO {
     @Schema(description = "Cantidad de productos", example = "15")
     private int stock;
 
+    private CategoriaDTO categoria;
+
     // GETTERS Y SETTERS
 
     public Long getId() {
@@ -45,5 +47,12 @@ public class ProductoResponseDTO {
     }
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
 }

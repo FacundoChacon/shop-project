@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 import java.math.BigDecimal;
 
@@ -22,12 +20,15 @@ public class Producto {
 
     private int stock;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
     // GETTERS Y SETTERS
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,7 +36,6 @@ public class Producto {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -43,7 +43,6 @@ public class Producto {
     public BigDecimal getPrecio() {
         return precio;
     }
-
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
@@ -51,8 +50,14 @@ public class Producto {
     public Integer getStock() {
         return stock;
     }
-
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

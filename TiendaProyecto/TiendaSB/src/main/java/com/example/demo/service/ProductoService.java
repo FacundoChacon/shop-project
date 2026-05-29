@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CategoriaDTO;
 import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.exception.ProductoNoEncontradoException;
+import com.example.demo.model.Categoria;
 import com.example.demo.model.Producto;
+import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +16,21 @@ import java.util.List;
 @Service
 public class ProductoService {
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     private Producto convertirAEntidad(ProductRequestDTO dto){
 
         Producto producto = new Producto();
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() ->
+                        new RuntimeException("Categoría no encontrada"));
 
+        producto.setCategoria(categoria);
         producto.setNombre(dto.getNombre());
         producto.setPrecio(dto.getPrecio());
         producto.setStock(dto.getStock());
+
 
         return producto;
     }
@@ -27,7 +38,12 @@ public class ProductoService {
     private ProductoResponseDTO convertirAResponseDTO(Producto producto){
 
         ProductoResponseDTO dto = new ProductoResponseDTO();
+        CategoriaDTO categoriaDTO = new CategoriaDTO();
 
+        categoriaDTO.setId(producto.getCategoria().getId());
+        categoriaDTO.setNombre(producto.getCategoria().getNombre());
+
+        dto.setCategoria(categoriaDTO);
         dto.setId(producto.getId());
         dto.setNombre(producto.getNombre());
         dto.setPrecio(producto.getPrecio());
