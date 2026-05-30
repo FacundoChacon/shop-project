@@ -144,18 +144,43 @@ public class ProductoService {
 
         // VALIDAR CAMPO
 
-        CampoOrdenamientoProducto.valueOf(
-                campo.toUpperCase()
-        );
+        return repository.findAll(validarCampoOrdenamiento(campo,direccion))
+                .stream()
+                .map(this::convertirAResponseDTO)
+                .toList();
+    }
+
+    //  VALIDAR CAMPO
+    public Sort validarCampoOrdenamiento(String campo,String direccion) {
+        CampoOrdenamientoProducto.valueOf(campo.toUpperCase());
 
         Sort sort =
                 direccion.equalsIgnoreCase("desc")
                         ? Sort.by(campo).descending()
                         : Sort.by(campo).ascending();
 
-        return repository.findAll(sort)
-                .stream()
-                .map(this::convertirAResponseDTO)
-                .toList();
+        return sort;
+    }
+
+    //  LISTA PAGINADA Y ORDENADA
+
+    public Page<ProductoResponseDTO>
+    listarPaginadosYOrdenados(
+            int pagina,
+            int cantidad,
+            String campo,
+            String direccion){
+
+        Sort sort = validarCampoOrdenamiento(campo,direccion);
+
+        Pageable pageable =
+                PageRequest.of(
+                        pagina,
+                        cantidad,
+                        sort
+                );
+
+        return repository.findAll(pageable)
+                .map(this::convertirAResponseDTO);
     }
 }

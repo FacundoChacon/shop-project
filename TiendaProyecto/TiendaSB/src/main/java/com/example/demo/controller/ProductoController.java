@@ -122,4 +122,15 @@ public class ProductoController {
                 service.listarOrdenados(campo, direccion)
         );
     }
+
+    //  LISTAR PAGINADOS Y ORDENADOS
+    @GetMapping("/pagina-ordenada")
+    public ResponseEntity<Page<ProductoResponseDTO>> listarPaginadosYOrdenados(@RequestParam int pagina,
+                                                                               @RequestParam int cantidad,
+                                                                               @RequestParam String campo,
+                                                                               @RequestParam String direccion) {
+        return ResponseEntity.ok(
+                service.listarPaginadosYOrdenados(pagina,cantidad,campo,direccion)
+        );
+    }
 }
