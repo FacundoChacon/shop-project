@@ -111,4 +111,12 @@ public class ProductoService {
 
         return convertirAResponseDTO(actualizado);
     }
+
+    //  BUSCAR POR NOMBRE
+    public List<ProductoResponseDTO> buscarPorNombre(String nombre){
+        return repository.findByNombreContainingIgnoreCase(nombre)
+                .stream()
+                .map(this::convertirAResponseDTO)
+                .toList();
+    }
 }

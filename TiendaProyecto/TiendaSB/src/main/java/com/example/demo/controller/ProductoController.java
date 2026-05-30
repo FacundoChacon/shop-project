@@ -88,4 +88,12 @@ public class ProductoController {
                                                           @Valid @RequestBody ProductRequestDTO dto){
         return ResponseEntity.ok(service.actualizarProducto(id,dto));
     }
+
+    //  BUSCAR POR NOMBRE
+    @GetMapping("/buscar")
+    public ResponseEntity<List<ProductoResponseDTO>> buscarPorNombre(
+            @RequestParam String nombre){
+
+        return ResponseEntity.ok(service.buscarPorNombre(nombre));
+    }
 }
