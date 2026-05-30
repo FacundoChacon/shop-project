@@ -49,7 +49,7 @@ public class CategoriaService {
     }
 
     //  BUSCAR POR ID CATEGORIAS
-    public CategoriaResponseDTO buscarPorID(Long id, CategoriaRequestDTO dto) {
+    public CategoriaResponseDTO buscarPorID(Long id) {
         Categoria categoria = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
         return convertirAResponseDTO(categoria);
