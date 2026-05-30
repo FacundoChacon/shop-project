@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CategoriaDTO;
+import com.example.demo.dto.CategoriaResponseDTO;
 import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.exception.ProductoNoEncontradoException;
@@ -39,10 +39,10 @@ public class ProductoService {
     private ProductoResponseDTO convertirAResponseDTO(Producto producto){
 
         ProductoResponseDTO dto = new ProductoResponseDTO();
-        CategoriaDTO categoriaDTO;
+        CategoriaResponseDTO categoriaDTO;
         if(producto.getCategoria() != null){
 
-            categoriaDTO = new CategoriaDTO();
+            categoriaDTO = new CategoriaResponseDTO();
 
             categoriaDTO.setId(producto.getCategoria().getId());
             categoriaDTO.setNombre(producto.getCategoria().getNombre());

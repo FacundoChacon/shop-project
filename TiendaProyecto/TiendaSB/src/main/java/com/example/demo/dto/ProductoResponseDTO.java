@@ -18,7 +18,7 @@ public class ProductoResponseDTO {
     @Schema(description = "Cantidad de productos", example = "15")
     private int stock;
 
-    private CategoriaDTO categoria;
+    private CategoriaResponseDTO categoria;
 
     private LocalDateTime fechaCreacion;
 
@@ -54,10 +54,10 @@ public class ProductoResponseDTO {
         this.stock = stock;
     }
 
-    public CategoriaDTO getCategoria() {
+    public CategoriaResponseDTO getCategoria() {
         return categoria;
     }
-    public void setCategoria(CategoriaDTO categoria) {
+    public void setCategoria(CategoriaResponseDTO categoria) {
         this.categoria = categoria;
     }
 

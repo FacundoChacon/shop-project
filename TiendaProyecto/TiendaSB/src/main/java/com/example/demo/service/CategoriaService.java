@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CategoriaRequestDTO;
 import com.example.demo.dto.CategoriaResponseDTO;
-import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.model.Categoria;
 import com.example.demo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
