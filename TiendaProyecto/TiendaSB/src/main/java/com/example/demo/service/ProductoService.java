@@ -10,6 +10,10 @@ import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -119,4 +123,17 @@ public class ProductoService {
                 .map(this::convertirAResponseDTO)
                 .toList();
     }
+
+    //  LISTA PAGINADA
+    public Page<ProductoResponseDTO> listarProductosPaginados(
+            int page,
+            int size){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return repository.findAll(pageable)
+                .map(this::convertirAResponseDTO);
+    }
+
+
 }

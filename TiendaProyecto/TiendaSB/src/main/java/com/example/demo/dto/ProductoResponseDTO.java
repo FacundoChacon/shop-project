@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,8 +22,10 @@ public class ProductoResponseDTO {
 
     private CategoriaResponseDTO categoria;
 
+    @CreatedDate
     private LocalDateTime fechaCreacion;
 
+    @LastModifiedDate
     private LocalDateTime fechaActualizacion;
 
     // GETTERS Y SETTERS

@@ -5,6 +5,7 @@ import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.service.ProductoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -95,5 +96,17 @@ public class ProductoController {
             @RequestParam String nombre){
 
         return ResponseEntity.ok(service.buscarPorNombre(nombre));
+    }
+
+    //  LISTAR PAGINADO
+    @GetMapping("/paginado")
+    public ResponseEntity<Page<ProductoResponseDTO>> listarPaginado(
+
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size){
+
+        return ResponseEntity.ok(
+                service.listarProductosPaginados(page, size)
+        );
     }
 }
