@@ -135,5 +135,22 @@ public class ProductoService {
                 .map(this::convertirAResponseDTO);
     }
 
+    //  LISTAR ORDENADOS
+    public List<ProductoResponseDTO> listarOrdenados(
+            String campo,
+            String direccion){
 
+        Sort sort;
+
+        if(direccion.equalsIgnoreCase("desc")){
+            sort = Sort.by(campo).descending();
+        } else {
+            sort = Sort.by(campo).ascending();
+        }
+
+        return repository.findAll(sort)
+                .stream()
+                .map(this::convertirAResponseDTO)
+                .toList();
+    }
 }

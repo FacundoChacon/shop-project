@@ -109,4 +109,16 @@ public class ProductoController {
                 service.listarProductosPaginados(page, size)
         );
     }
+
+    //  LISTAR ORDENADOS
+    @GetMapping("/ordenados")
+    public ResponseEntity<List<ProductoResponseDTO>> listarOrdenados(
+
+            @RequestParam(defaultValue = "nombre") String campo,
+            @RequestParam(defaultValue = "asc") String direccion){
+
+        return ResponseEntity.ok(
+                service.listarOrdenados(campo, direccion)
+        );
+    }
 }
