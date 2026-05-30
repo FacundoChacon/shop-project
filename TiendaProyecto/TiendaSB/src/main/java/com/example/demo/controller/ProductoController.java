@@ -99,23 +99,24 @@ public class ProductoController {
     }
 
     //  LISTAR PAGINADO
-    @GetMapping("/paginado")
-    public ResponseEntity<Page<ProductoResponseDTO>> listarPaginado(
-
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size){
+    @GetMapping("/pagina")
+    public ResponseEntity<Page<ProductoResponseDTO>>
+    listarPaginados(
+            @RequestParam int pagina,
+            @RequestParam int cantidad){
 
         return ResponseEntity.ok(
-                service.listarProductosPaginados(page, size)
+                service.listarPaginados(
+                        pagina,
+                        cantidad
+                )
         );
     }
 
     //  LISTAR ORDENADOS
     @GetMapping("/ordenados")
-    public ResponseEntity<List<ProductoResponseDTO>> listarOrdenados(
-
-            @RequestParam(defaultValue = "nombre") String campo,
-            @RequestParam(defaultValue = "asc") String direccion){
+    public ResponseEntity<List<ProductoResponseDTO>> listarOrdenados(@RequestParam String campo,
+                                                                     @RequestParam String direccion){
 
         return ResponseEntity.ok(
                 service.listarOrdenados(campo, direccion)

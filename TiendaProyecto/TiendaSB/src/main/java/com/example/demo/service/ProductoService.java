@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.CategoriaResponseDTO;
 import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
+import com.example.demo.enums.CampoOrdenamientoProducto;
 import com.example.demo.exception.ProductoNoEncontradoException;
 import com.example.demo.model.Categoria;
 import com.example.demo.model.Producto;
@@ -125,11 +126,12 @@ public class ProductoService {
     }
 
     //  LISTA PAGINADA
-    public Page<ProductoResponseDTO> listarProductosPaginados(
-            int page,
-            int size){
+    public Page<ProductoResponseDTO> listarPaginados(
+            int pagina,
+            int cantidad){
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable =
+                PageRequest.of(pagina, cantidad);
 
         return repository.findAll(pageable)
                 .map(this::convertirAResponseDTO);
@@ -140,13 +142,16 @@ public class ProductoService {
             String campo,
             String direccion){
 
-        Sort sort;
+        // VALIDAR CAMPO
 
-        if(direccion.equalsIgnoreCase("desc")){
-            sort = Sort.by(campo).descending();
-        } else {
-            sort = Sort.by(campo).ascending();
-        }
+        CampoOrdenamientoProducto.valueOf(
+                campo.toUpperCase()
+        );
+
+        Sort sort =
+                direccion.equalsIgnoreCase("desc")
+                        ? Sort.by(campo).descending()
+                        : Sort.by(campo).ascending();
 
         return repository.findAll(sort)
                 .stream()
