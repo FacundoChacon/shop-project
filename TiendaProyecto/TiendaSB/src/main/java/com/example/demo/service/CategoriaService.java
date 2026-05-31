@@ -44,7 +44,7 @@ public class CategoriaService {
 
     //  GUARDAR CATEGORIAS
     public CategoriaResponseDTO guardarCategoria(CategoriaRequestDTO dto){
-        Categoria categoria = new Categoria();
+        Categoria categoria = convertirAEntidad(dto);
         Categoria guardado = repository.save(categoria);
 
         return convertirAResponseDTO(guardado);
