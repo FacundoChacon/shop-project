@@ -28,31 +28,31 @@ public class ProductRequestDTO {
 
     // GETTERS Y SETTERS
 
-    public @NotBlank(message = "El nombre es obligatorio") String getNombre() {
+    public String getNombre() {
         return nombre;
     }
-    public void setNombre(@NotBlank(message = "El nombre es obligatorio") String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public @Positive(message = "El precio debe ser mayor a 0") BigDecimal getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
-    public void setPrecio(@Positive(message = "El precio debe ser mayor a 0") BigDecimal precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
-    public @Min(value = 0, message = "El stock no puede ser negativo") int getStock() {
+    public int getStock() {
         return stock;
     }
-    public void setStock(@Min(value = 0, message = "El stock no puede ser negativo") int stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public @NotNull(message = "La categoría es obligatoria") Long getCategoriaId() {
+    public Long getCategoriaId() {
         return categoriaId;
     }
-    public void setCategoriaId(@NotNull(message = "La categoría es obligatoria") Long categoriaId) {
+    public void setCategoriaId(Long categoriaId) {
         this.categoriaId = categoriaId;
     }
 }
