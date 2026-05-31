@@ -22,10 +22,8 @@ public class ProductoResponseDTO {
 
     private CategoriaResponseDTO categoria;
 
-    @CreatedDate
     private LocalDateTime fechaCreacion;
 
-    @LastModifiedDate
     private LocalDateTime fechaActualizacion;
 
     // GETTERS Y SETTERS

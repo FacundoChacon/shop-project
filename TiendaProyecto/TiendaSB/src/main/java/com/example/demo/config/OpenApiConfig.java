@@ -19,7 +19,7 @@ public class OpenApiConfig {
                 .info(new Info()
 
                         .title("API Tienda")
-                        .version("1.0")
+                        .version("1.0.0")
 
                         .description("""
                                 API REST desarrollada con Spring Boot.
@@ -39,6 +39,7 @@ public class OpenApiConfig {
                                 .name("MIT")))
 
                 .externalDocs(new ExternalDocumentation()
-                        .description("Repositorio del proyecto"));
+                        .description("Repositorio del proyecto")
+                        .url("https://github.com/FacundoChacon/shop-project"));
     }
 }

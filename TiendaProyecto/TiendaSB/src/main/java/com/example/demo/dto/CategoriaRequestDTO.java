@@ -8,10 +8,10 @@ public class CategoriaRequestDTO {
 
     //  GETTERS Y SETTERS
 
-    public @NotBlank(message = "El nombre es obligatorio") String getNombre() {
+    public String getNombre() {
         return nombre;
     }
-    public void setNombre(@NotBlank(message = "El nombre es obligatorio") String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }
