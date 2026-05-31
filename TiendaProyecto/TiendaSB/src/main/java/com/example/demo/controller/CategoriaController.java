@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.CategoriaRequestDTO;
 import com.example.demo.dto.CategoriaResponseDTO;
 import com.example.demo.service.CategoriaService;
+import com.example.demo.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +23,11 @@ import java.util.List;
 )
 public class CategoriaController {
 
-    @Autowired
-    private CategoriaService service;
+    private final CategoriaService service;
+
+    public CategoriaController(CategoriaService service){
+        this.service = service;
+    }
 
     //  LISTAR TODOS
     @Operation(
