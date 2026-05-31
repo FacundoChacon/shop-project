@@ -160,7 +160,14 @@ public class ProductoService {
 
     //  VALIDAR CAMPO
     public Sort validarCampoOrdenamiento(String campo,String direccion) {
-        CampoOrdenamientoProducto.valueOf(campo.toUpperCase());
+        try{
+            CampoOrdenamientoProducto.valueOf(
+                    campo.toUpperCase());
+        }
+        catch (IllegalArgumentException e){
+            throw new RuntimeException(
+                    "Campo de ordenamiento inválido");
+        }
 
         Sort sort =
                 direccion.equalsIgnoreCase("desc")
