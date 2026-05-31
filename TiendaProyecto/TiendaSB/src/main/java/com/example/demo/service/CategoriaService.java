@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CategoriaRequestDTO;
 import com.example.demo.dto.CategoriaResponseDTO;
+import com.example.demo.exception.RecursoNoEncontradoException;
 import com.example.demo.model.Categoria;
 import com.example.demo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,14 +54,14 @@ public class CategoriaService {
     //  BUSCAR POR ID CATEGORIAS
     public CategoriaResponseDTO buscarPorID(Long id) {
         Categoria categoria = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoria no encontrada"));
         return convertirAResponseDTO(categoria);
     }
 
     //  ACTUALIZAR CATEGORIAS
     public CategoriaResponseDTO actualizarCategoria(Long id, CategoriaRequestDTO dto) {
         Categoria categoria = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoria no encontrada"));
 
         categoria.setNombre(dto.getNombre());
 
@@ -71,7 +72,7 @@ public class CategoriaService {
     //  ELIMINAR CATEGORIAS
     public void eliminarCategoria(Long id) {
         Categoria categoria = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoria no encontrada"));
 
         repository.deleteById(id);
     }
