@@ -91,6 +91,12 @@ public class ProductoController {
     }
 
     //  BUSCAR POR NOMBRE
+    @Operation(
+            summary = "Buscar producto por nombre",
+            description = "Devuelve una lista de objetos buscador por el nombre desde la base de datos"
+    )
+    @ApiResponse(responseCode = "200", description = "Listado obtenido correctamente")
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     @GetMapping("/buscar")
     public ResponseEntity<List<ProductoResponseDTO>> buscarPorNombre(
             @RequestParam String nombre){
@@ -99,6 +105,12 @@ public class ProductoController {
     }
 
     //  LISTAR PAGINADO
+    @Operation(
+            summary = "Listado de productos con limite",
+            description = "Se le indica que pagina se quiere ver hasta donde y el limite de hasta donde se quiera mostrar (paginacion)"
+    )
+    @ApiResponse(responseCode = "200", description = "Listado obtenido correctamente")
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     @GetMapping("/pagina")
     public ResponseEntity<Page<ProductoResponseDTO>>
     listarPaginados(
@@ -114,6 +126,12 @@ public class ProductoController {
     }
 
     //  LISTAR ORDENADOS
+    @Operation(
+            summary = "Buscar productos por nombre y con limite",
+            description = "Obtiene una lista paginada buscando el nombre del producto en la base de datos"
+    )
+    @ApiResponse(responseCode = "200", description = "Listado obtenido correctamente")
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     @GetMapping("/ordenados")
     public ResponseEntity<List<ProductoResponseDTO>> listarOrdenados(@RequestParam String campo,
                                                                      @RequestParam String direccion){
