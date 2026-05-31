@@ -4,7 +4,6 @@ import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.service.ProductoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,11 @@ import java.util.List;
 )
 public class ProductoController {
 
-    @Autowired
-    private ProductoService service;
+    private final ProductoService service;
+
+    public ProductoController(ProductoService service){
+        this.service = service;
+    }
 
     // LISTAR TODOS
     @Operation(
