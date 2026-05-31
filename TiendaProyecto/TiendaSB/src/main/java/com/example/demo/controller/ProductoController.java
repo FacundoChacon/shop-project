@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -151,6 +152,54 @@ public class ProductoController {
                                                                                @RequestParam String direccion) {
         return ResponseEntity.ok(
                 service.listarPaginadosYOrdenados(pagina,cantidad,campo,direccion)
+        );
+    }
+
+
+    //  LISTAR CON FILTROS OPCIONALES PAGINADO
+    @GetMapping("/filtro-avanzado")
+    public ResponseEntity<Page<ProductoResponseDTO>>
+    filtrarPaginado(
+
+            @RequestParam(required = false)
+            String nombre,
+
+            @RequestParam(required = false)
+            Long categoriaId,
+
+            @RequestParam(required = false)
+            BigDecimal precioMin,
+
+            @RequestParam(required = false)
+            BigDecimal precioMax,
+
+            @RequestParam(required = false)
+            Integer stockMin,
+
+            @RequestParam(defaultValue = "0")
+            int pagina,
+
+            @RequestParam(defaultValue = "10")
+            int cantidad,
+
+            @RequestParam(defaultValue = "id")
+            String campo,
+
+            @RequestParam(defaultValue = "asc")
+            String direccion){
+
+        return ResponseEntity.ok(
+                service.filtrarPaginado(
+                        nombre,
+                        categoriaId,
+                        precioMin,
+                        precioMax,
+                        stockMin,
+                        pagina,
+                        cantidad,
+                        campo,
+                        direccion
+                )
         );
     }
 }

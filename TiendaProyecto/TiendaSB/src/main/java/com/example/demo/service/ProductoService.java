@@ -10,13 +10,16 @@ import com.example.demo.model.Categoria;
 import com.example.demo.model.Producto;
 import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.ProductoRepository;
+import com.example.demo.specification.ProductoSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -197,5 +200,49 @@ public class ProductoService {
 
         return repository.findAll(pageable)
                 .map(this::convertirAResponseDTO);
+    }
+
+    public Page<ProductoResponseDTO> filtrarPaginado(
+            String nombre,
+            Long categoriaId,
+            BigDecimal precioMin,
+            BigDecimal precioMax,
+            Integer stockMin,
+            int pagina,
+            int cantidad,
+            String campo,
+            String direccion){
+
+        Specification<Producto> spec =
+                Specification.where(
+                                ProductoSpecification.nombreContiene(nombre))
+                        .and(
+                                ProductoSpecification.categoriaId(categoriaId))
+                        .and(
+                                ProductoSpecification.precioMayorIgual(precioMin))
+                        .and(
+                                ProductoSpecification.precioMenorIgual(precioMax))
+                        .and(
+                                ProductoSpecification.stockMayorIgual(stockMin));
+
+        Sort sort =
+                validarCampoOrdenamiento(
+                        campo,
+                        direccion
+                );
+
+        Pageable pageable =
+                PageRequest.of(
+                        pagina,
+                        cantidad,
+                        sort
+                );
+
+        return repository.findAll(
+                        spec,
+                        pageable)
+                .map(
+                        this::convertirAResponseDTO
+                );
     }
 }
