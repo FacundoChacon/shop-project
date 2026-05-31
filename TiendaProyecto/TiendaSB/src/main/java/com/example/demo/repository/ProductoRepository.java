@@ -2,9 +2,14 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    List<Producto> findByNombreContainingIgnoreCase(String nombre);
+public interface ProductoRepository
+        extends JpaRepository<Producto, Long>,
+        JpaSpecificationExecutor<Producto> {
+
+    List<Producto> findByNombreContainingIgnoreCase(
+            String nombre);
 }
