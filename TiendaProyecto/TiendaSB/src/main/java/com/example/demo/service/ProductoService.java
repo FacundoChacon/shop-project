@@ -5,6 +5,7 @@ import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.enums.CampoOrdenamientoProducto;
 import com.example.demo.exception.ProductoNoEncontradoException;
+import com.example.demo.exception.RecursoNoEncontradoException;
 import com.example.demo.model.Categoria;
 import com.example.demo.model.Producto;
 import com.example.demo.repository.CategoriaRepository;
@@ -30,7 +31,7 @@ public class ProductoService {
         Categoria categoria = categoriaRepository
                 .findById(dto.getCategoriaId())
                 .orElseThrow(() ->
-                        new RuntimeException("Categoría no encontrada"));
+                        new RecursoNoEncontradoException("Categoría no encontrada"));
 
         producto.setCategoria(categoria);
         producto.setNombre(dto.getNombre());
@@ -108,6 +109,13 @@ public class ProductoService {
         Producto producto = repository.findById(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado"));
 
+        Categoria categoria = categoriaRepository
+                .findById(dto.getCategoriaId())
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException(
+                                "Categoría no encontrada"));
+
+        producto.setCategoria(categoria);
         producto.setNombre(dto.getNombre());
         producto.setPrecio(dto.getPrecio());
         producto.setStock(dto.getStock());
