@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponseDTO;
+import com.example.demo.dto.RegisterRequestDTO;
+import com.example.demo.enums.Rol;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.JwtService;
@@ -59,6 +61,41 @@ public class AuthController {
                 );
         return ResponseEntity.ok(
                 new LoginResponseDTO(token)
+        );
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(
+            @RequestBody RegisterRequestDTO dto){
+
+        if(usuarioRepository
+                .findByUsername(dto.getUsername())
+                .isPresent()){
+
+            return ResponseEntity.badRequest()
+                    .body("El usuario ya existe");
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setUsername(
+                dto.getUsername()
+        );
+
+        usuario.setPassword(
+                passwordEncoder.encode(
+                        dto.getPassword()
+                )
+        );
+
+        usuario.setRol(
+                Rol.USER
+        );
+
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok(
+                "Usuario registrado correctamente"
         );
     }
 }
