@@ -28,10 +28,19 @@ public class JwtService {
         );
     }
 
-    public String generarToken(String username){
+    public String extraerRol(String token){
+
+        return obtenerClaims(token)
+                .get("rol", String.class);
+    }
+
+    public String generarToken(
+            String username,
+            String rol){
 
         return Jwts.builder()
                 .setSubject(username)
+                .claim("rol",rol)
                 .setIssuedAt(new Date())
                 .setExpiration(
                         new Date(
