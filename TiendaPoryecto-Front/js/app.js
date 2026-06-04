@@ -39,6 +39,17 @@ async function login(){
 
         alert("Login exitoso");
 
+        localStorage.setItem(
+            "token",
+            data.token
+        );
+
+        document.getElementById(
+            "login-container"
+        ).style.display = "none";
+
+        cargarProductos();
+
     }catch(error){
 
         alert(error.message);
@@ -124,4 +135,28 @@ function mostrarProductos(productos){
             </div>
         `;
     });
+}
+
+window.onload = () => {
+
+    const token =
+        localStorage.getItem("token");
+
+    if(token){
+
+        document.getElementById(
+            "login-container"
+        ).style.display = "none";
+
+        cargarProductos();
+    }
+};
+
+function logout(){
+
+    localStorage.removeItem(
+        "token"
+    );
+
+    location.reload();
 }
