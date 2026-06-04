@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.ProductRequestDTO;
 import com.example.demo.dto.ProductoResponseDTO;
 import com.example.demo.service.ProductoService;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,8 +21,9 @@ import java.util.List;
 @RequestMapping("/productos")
 @Tag(
         name = "Productos",
-        description = "Operaciones relacionadas con los productos"
+        description = "Administracion de productos"
 )
+@SecurityRequirement(name = "bearerAuth")
 public class ProductoController {
 
     private final ProductoService service;
@@ -55,12 +58,17 @@ public class ProductoController {
     }
 
     // BUSCAR POR ID
-    @Operation(
-            summary = "Busca un producto por su ID",
-            description = "Obtiene un producto de la base de datos"
-    )
-    @ApiResponse(responseCode = "200", description = "Listado obtenido correctamente")
-    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    @Operation(summary = "Buscar producto por ID")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Producto encontrado"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Producto no encontrado"
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponseDTO> buscar(@PathVariable Long id){
         return ResponseEntity.ok(service.buscarPorId(id));
@@ -145,6 +153,20 @@ public class ProductoController {
     }
 
     //  LISTAR PAGINADOS Y ORDENADOS
+    @Operation(
+            summary = "Listado paginado y ordenado",
+            description = "Obtiene productos paginados y ordenados según el campo indicado"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Listado obtenido correctamente"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Campo de ordenamiento inválido"
+            )
+    })
     @GetMapping("/pagina-ordenada")
     public ResponseEntity<Page<ProductoResponseDTO>> listarPaginadosYOrdenados(@RequestParam int pagina,
                                                                                @RequestParam int cantidad,
@@ -157,6 +179,28 @@ public class ProductoController {
 
 
     //  LISTAR CON FILTROS OPCIONALES PAGINADO
+    @Operation(
+            summary = "Filtrado avanzado",
+            description = """
+                Permite filtrar productos por:
+                - nombre
+                - categoría
+                - rango de precios
+                - stock mínimo
+
+                Además soporta paginación y ordenamiento.
+                """
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Listado obtenido correctamente"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Parámetros inválidos"
+            )
+    })
     @GetMapping("/filtro-avanzado")
     public ResponseEntity<Page<ProductoResponseDTO>>
     filtrarPaginado(

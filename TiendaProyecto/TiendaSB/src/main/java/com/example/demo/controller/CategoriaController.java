@@ -3,12 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.dto.CategoriaRequestDTO;
 import com.example.demo.dto.CategoriaResponseDTO;
 import com.example.demo.service.CategoriaService;
-import com.example.demo.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +20,7 @@ import java.util.List;
         name = "categorias",
         description = "Operaciones relacionadas con las categorias"
 )
+@SecurityRequirement(name = "bearerAuth")
 public class CategoriaController {
 
     private final CategoriaService service;

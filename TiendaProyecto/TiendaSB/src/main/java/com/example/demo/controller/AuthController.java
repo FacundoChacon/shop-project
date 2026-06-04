@@ -9,6 +9,9 @@ import com.example.demo.exception.UsuarioNoEncontradoExeption;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(
+        name = "Autenticación",
+        description = "Endpoints para login y registro de usuarios"
+)
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -31,7 +40,26 @@ public class AuthController {
 
     //  METODOS
 
+    @Operation(
+            summary = "Iniciar sesión",
+            description = "Valida las credenciales del usuario y devuelve un JWT"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Login exitoso"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Credenciales inválidas"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuario no encontrado"
+            )
+    })
     @PostMapping("/login")
+    @SecurityRequirements
     public ResponseEntity<LoginResponseDTO>
     login(
             @RequestBody
@@ -66,6 +94,20 @@ public class AuthController {
         );
     }
 
+    @Operation(
+            summary = "Registrar usuario",
+            description = "Crea un nuevo usuario con rol USER"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuario registrado correctamente"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "El usuario ya existe"
+            )
+    })
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @RequestBody RegisterRequestDTO dto){
