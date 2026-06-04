@@ -4,6 +4,8 @@ import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponseDTO;
 import com.example.demo.dto.RegisterRequestDTO;
 import com.example.demo.enums.Rol;
+import com.example.demo.exception.CredencialesInvalidasException;
+import com.example.demo.exception.UsuarioNoEncontradoExeption;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.JwtService;
@@ -40,7 +42,7 @@ public class AuthController {
                                 dto.getUsername()
                         )
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new UsuarioNoEncontradoExeption(
                                         "Usuario no encontrado"
                                 )
                         );
@@ -50,7 +52,7 @@ public class AuthController {
                         usuario.getPassword()
                 );
         if(!passwordCorrecta){
-            throw new RuntimeException(
+            throw new CredencialesInvalidasException(
                     "Credenciales inválidas"
             );
         }
