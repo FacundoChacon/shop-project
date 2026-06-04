@@ -76,4 +76,46 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(error);
     }
+
+    //  USUARIO NO ENCONTRADO
+    @ExceptionHandler(
+            UsuarioNoEncontradoExeption.class
+    )
+    public ResponseEntity<ErrorResponse>
+    manejarUsuarioNoEncontrado(UsuarioNoEncontradoExeption ex)
+    {
+        ErrorResponse error =
+                new ErrorResponse
+                (
+                        LocalDateTime.now(),
+                        HttpStatus.NOT_FOUND.value(),
+                        ex.getMessage()
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(error);
+    }
+
+    //  CREDENCIALES INVALIDAS
+    @ExceptionHandler(
+            CredencialesInvalidasException.class
+    )
+    public ResponseEntity<ErrorResponse>
+    manejarCredencialesInvalidas
+    (CredencialesInvalidasException ex)
+    {
+
+        ErrorResponse error =
+                new ErrorResponse
+                (
+                        LocalDateTime.now(),
+                        HttpStatus.UNAUTHORIZED.value(),
+                        ex.getMessage()
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(error);
+    }
 }
